@@ -286,16 +286,6 @@ for j=1:nnc
                     else
                         %%% lomb-scargle
                         [ls_pxx,ls_f,pth]=plomb(pl_x,pl_t,fun_opt.fhi,fun_opt.ofac, 'Pd', fun_opt.Pd);
-%                         error('fvec MUST be called fvec apparently if it is used as an input')
-%                         hh = hann(numel(pl_x)); [ls_pxx,ls_f,pth]=plomb(pl_x.*hh,pl_t,6,fun_opt.ofac, 'Pd', fun_opt.Pd);
-%                         fvec=logspace(-2,1,10); [ls_pxx,ls_f]=plomb(pl_x,pl_t,fvec);
-%                         fvec=linspace(0.01,6,10); [ls_pxx,ls_f]=plomb(pl_x,pl_t,fvec);
-                        
-                        
-%                         [ls_pxx,ls_f,pth]=plomb(pl_x,pl_t,6,fun_opt.ofac, 'Pd', fun_opt.Pd);
-%                         [ls_pxx,ls_f]=plomb(pl_x,pl_t,0.3:0.01:6);
-%                         [ls_pxx,ls_f]=plomb(pl_x,pl_t,0.01:0.01:6);
-%                         ls_pxx = pow2db(ls_pxx);
                         
                         %%% make sure the output is sorted (but already done, but just in case)
                         [~,ls_I] = sort(ls_f);
@@ -304,14 +294,12 @@ for j=1:nnc
                         
                         %%% apply filter (moving window)
                         ls_pxx=movingmean(ls_pxx,13,1,1);   % doesn't seem to make a difference
-%                         ls_pxx=smoothdata(ls_pxx,'gaussian',[15 15], 'omitnan');   
-%                         ls_pxx(ls_f<0.33) = NaN;
+
                         
                         %%% find max freq
                         ls_pxx2 = ls_pxx;
                         ls_pxx2(ls_f<0.33) = NaN;
                         mx_pxx = nanmax(ls_pxx2);
-%                         mx_pxx = nanmax(ls_pxx);
                         fq_pxx = find(ls_pxx==mx_pxx);
                         GCDC.fmax(n,fa) = nanmean(ls_f(fq_pxx));
                         GCDC.fmax_pxx(n,fa) = mx_pxx;
@@ -319,22 +307,6 @@ for j=1:nnc
                         
                         GCDC.Dpts(n,fa) = numel(pl_x);
                         
-                        %%%
-%                         figure(1);
-% %                         hold on;
-% %                         hold on;
-%                         plot(ls_f, ls_pxx, '-k')
-% % % % %                         plot(ls_f(fq_pxx), pDB(fq_pxx), 'o', 'MarkerFaceColor', 'r', 'MarkerEdgeColor', 'r', 'MarkerSize', 5)
-%                         set(gca, 'xscale', 'log')
-% %                         set(gca, 'yscale', 'log')
-% % % % %                         hold off;
-%                         xlim([0.01 6])
-% % % %                         ylim([-80 -35])
-%                         xlabel('frequency [Hz]')
-%                         ylabel('Py(f) [dB]')
-%                         title(datestr(w1, 'yyyy-mm-dd HH:MM:SS'))
-%                         drawnow;
-
                         
                         %%% store power spectrum for visualization
                         [~,~,ibin] = histcounts(ls_f,pvec);
@@ -384,7 +356,6 @@ for j=1:nnc
     a2 = find(matname == '.');
     a2 = a2(end)-1;
     matname = ['GCDC_L02_Tree_Sway_' matname(a1:a2) '.mat'];
-%     matname = ['GCDC_L02_Tree_Sway_' matname(a1:a2) '_5min.mat'];
     save([path_out_freq matname], 'GCDC')
 end
 

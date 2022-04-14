@@ -19,7 +19,8 @@ sway_sites = [1 2];  % [1 2 3 4 5 6 7]
 sd_i = datenum(2014,10,1);  % yyyy,mm,dd
 sd_f = datenum(2020,08,06);  % yyyy,mm,dd
 
-dt = 3600;  % time step of time series (seconds) -- *** shoudl be same as fun_opt.win_int from a03_process_sway
+% time step of time series (seconds)
+dt = 3600;
 
 %% load data and file settings
 
