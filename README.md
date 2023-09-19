@@ -32,7 +32,7 @@ Raleigh, M.S., Gutmann, E.D., Van Stan II, J.T., Burns, S.P., Blanken, P.D., and
 
 ## Steps
 1. Configure paths and settings in **a00_data_file_settings.m**. If any paths do not exist, create them now.
-2. Check the validity of the GCDC files and comile .CSV files into a single NetCDF for each collection:
+2. Check the validity of the GCDC files and compile .CSV files into a single NetCDF for each collection:
     * open **a01_precheck_compile_GCDC.m**
     * change subset settings to choose your sensor/tree (order specified in **a00_data_file_settings.m**) and your date range
     * save and run **a01_precheck_compile_GCDC.m**
